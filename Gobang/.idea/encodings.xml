@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/src/DivComminucation/Client01.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/DivComminucation/ServerGUI.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/Test/MyClient2.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_01/EchoClient.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_01/EchoServer.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_02/EchoClient.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_02/MyClient.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_02/MyServer.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_02/kz/MyClient.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_02/kz/MyServer.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_03/MyClient02.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_03/TestBuffered.java" charset="GB2312" />
+    <file url="file://$PROJECT_DIR$/src/week/week_05/MyServer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_05_new/MyClient.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_07/EchoClient.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_08/EchoClientViaNio.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_08/EchoServerViaNio.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_08/MyServer.java" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/week/week_09/MultiCastSender.java" charset="GBK" />
+    <file url="PROJECT" charset="GBK" />
+  </component>
+</project>
