@@ -1,0 +1,196 @@
+<html>
+	<head>
+		<title>接元宝小游戏</title>
+
+	</head>
+	<body>
+		<input type=button id="flag" value="开始/结束">
+		财神移动速度:<input type="text" id="sd" value="1" placeholder="1">
+		元宝下落速度:<input type="text" id="down" value="1" placeholder="1">
+		元宝出现频次:<input type="text" id="count" value="1" placeholder="1">
+		横向:<input type="checkbox" id="hx">
+		<div id="back" style="background:url(back.png);position:absolute;left:0px;top:50px;border:solid 1px #000; width:800px;height:600px"></div>
+		<div class="info" style="top:110px">游戏方法：<br>左右键控制移动</div>
+		<div id="show_life" class="info" style="top:175px">生命数</div>
+		<div id="show_score" class="info" style="top:215px">得分数</div>
+		<div id="div_character" style="background:url(character.png);position:absolute;left:300px;top:550px; width:184px;height:100px"></div>
+		<style>
+			.cc {
+				height: 28px;
+				width: 40px;
+				background-image: url('ingot.png');
+			}
+
+			.info {
+				position: absolute;
+				left: 650px;
+				width: 120px;
+				height: 20px;
+				line-height: 20px;
+				border: solid 1px #ff0000;
+				background-color: #ffffcc;
+				font-size: 9pt;
+			}
+		</style>
+		<script language=javascript>
+			function check_box(x_1, y_1, w_1, h_1, x_2, y_2, w_2, h_2) //自定义碰撞检测函数
+			{
+				if (Math.abs(x_1 - x_2 + w_1 / 2 - w_2 / 2) <= w_1 / 2 + w_2 / 2 && Math.abs(y_1 - y_2 + h_1 / 2 - h_2 / 2) <= h_1 /
+					2 + h_2 / 2) {
+					return true; //检测到有碰撞返回真
+				} else {
+					return false; //没有碰撞
+				}
+			}
+
+			document.onkeydown = function(event) {
+
+				var obj = document.getElementById("div_character");
+				var position_x = obj.offsetLeft;
+				var e = event || window.event || arguments.callee.caller.arguments[0];
+
+				if (game_start == true) //如果游戏正在运行
+				{
+					var sd = document.getElementById("sd").value; //获取财神速度
+					if (event.keyCode == 37 && position_x > 15) //如果按下左键
+					{
+
+						obj.style.left = position_x - 15 * sd
+					}
+					if (event.keyCode == 39 && position_x < 606) //如果按下右键
+					{
+						obj.style.left = position_x + 10 * sd
+					}
+				}
+
+			};
+		</script>
+		<script>
+			document.addEventListener('DOMContentLoaded', (event) => {
+
+				game_start = false; //游戏状态
+				var game_life = 0; //生命值
+				var game_score = 0; //分数
+				var loop_state; //循环状态
+				var div_down; //层下落状态
+				document.getElementById("flag").onclick = function() {
+					if (game_start == true) //如果游戏正在运行
+					{
+						game_over(); //结束游戏
+						document.getElementById('sd').removeAttribute('disabled');
+						document.getElementById('count').removeAttribute('disabled');
+						document.getElementById('down').removeAttribute('disabled');
+					} else //如何游戏尚未运行或者结束，初始化
+					{
+						document.getElementById("sd").setAttribute('disabled', 'disabled');
+						document.getElementById("down").setAttribute('disabled', 'disabled');
+						document.getElementById("count").setAttribute('disabled', 'disabled');
+						game_start = true; //开始游戏
+						game_life = 3; //设置生命值
+						game_score = 0; //设置分数
+						document.getElementById("show_life").innerHTML = "生命数：" + game_life;
+						document.getElementById("show_score").innerHTML = "得分数：" + game_score
+						var count = document.getElementById("count").value; //获取下落頻次
+
+						//create_ingot(); //执行一次创建元宝函数
+						loop_state = setInterval(function() {
+							timer(count)
+						}, 1500); //循环执行创建元宝
+						div_down = setInterval(function() {
+							go_down()
+						}, 50); //循环执行元宝下落
+					}
+				}
+
+				//控制器
+				var timer = function(num) {
+					for (var i = 0; i < num; i++) {
+						create_ingot()
+					}
+				}
+
+				function create_ingot() //创建元宝函数
+				{
+					var temp = "";
+					var child = document.createElement("div");
+					temp = document.body.appendChild(child);
+					var temp_x = Math.floor(Math.random() * 750 + 1); //生成随机横坐标
+					temp.style.left = temp_x;
+					temp.style.top = 40;
+					temp.style.position = "absolute";
+					// temp.level = Math.floor(Math.random() * 4+ 1);
+					temp.className = "cc";
+					temp.setAttribute("level", Math.floor(Math.random() * 4) + 1);
+				}
+
+				function go_down() //元宝下落函数
+				{
+					var x1, y1; //定义玩家坐标
+					var hx = document.getElementById("hx").checked; //ture 为横向
+					//console.log(hx)
+					x1 = document.getElementById("div_character").offsetLeft;
+					y1 = 550; //获取玩家坐标
+					var cc = document.getElementsByClassName("cc");
+					var down = document.getElementById("down").value; //获取下落速度
+
+					for (var i = cc.length - 1; i >= 0; i--) {
+						if(typeof(cc[i])!="undefined"){
+							if (hx) {
+								var ram_x = (Math.random() * 10) + 1;
+								var ram = Math.random() < 0.3 ? -0.3 : 0.3;
+								ram = ram * ram_x;
+							} else {
+								var ram = 0;
+							}
+
+							var x2 = cc[i].offsetLeft;
+							var y2 = cc[i].offsetTop;
+							var level = cc[i].getAttribute("level");
+							cc[i].style.left = x2 + ram* down;
+							cc[i].style.top = y2 + level * down;
+							if (cc[i].offsetTop >= 600) {
+									console.log(cc[i].offsetTop)
+								if (check_box(x1, y1, 184, 100, x2, y2, 40, 28)) //调用碰撞检测函数返回真
+								{
+									game_score = game_score + (parseInt(level) + 1) * 50; //游戏分数增加
+									document.getElementById("show_score").innerHTML = "得分数：" + game_score
+								} else //如果没有碰撞
+								{
+									game_life--; //减少生命
+									document.getElementById("show_life").innerHTML = "生命数：" + game_life;
+									if (game_life == 0) {
+										game_over(); //如果生命等于0，调用结束游戏
+										document.getElementById('sd').removeAttribute('disabled');
+										document.getElementById('count').removeAttribute('disabled');
+										document.getElementById('down').removeAttribute('disabled');
+									}
+
+								}
+								if(typeof(cc[i])!="undefined"){
+										cc[i].remove();
+								}
+							}
+							}
+					}
+				}
+
+				//完成jq到js的转换
+				function game_over() //结束游戏函数
+				{
+					game_start = false; //设置状态
+					var cc = document.getElementsByClassName("cc");
+					for (var i = cc.length - 1; i >= 0; i--) {
+						cc[i].remove();
+					}
+					// for (var i = 0;i<=cc.length - 1; i++) {
+					// 	cc[i].remove();
+					// }
+					clearInterval(loop_state); //清除循环状态
+					clearInterval(div_down); //清除元宝下落
+					alert("你挂了！\n你得了" + game_score + "分！"); //弹出提示框
+				}
+			});
+		</script>
+
+	</body>
+</html>
